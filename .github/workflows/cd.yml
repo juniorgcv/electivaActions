@@ -1,14 +1,20 @@
----
-name: Continius Deployment
+name: Deploy to GitHub Pages
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  hello-gh-action:
-    name: Hello GitHub Actions
-    runs-in: windows-latest
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-      - uses: action/checkout@v2
-      - name: Run Tests
-        run: echo "RUNNING TESTS!"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: .
